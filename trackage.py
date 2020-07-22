@@ -1,17 +1,6 @@
 # Import the argparse library
 import argparse
-
-def add_package():
-    return 0
-
-def del_package():
-    return 0
-
-def track_all():
-    return 0
-
-def track_one():
-    return 0
+from functions import add_package, del_package, track_all, track_one
 
 # Create the parser
 parser = argparse.ArgumentParser(prog='trackage', description='Track your packages')
@@ -27,18 +16,27 @@ parser.add_argument('command', choices=FUNCTION_MAP.keys())
 parser.add_argument('tracking_number',
                        metavar='tracking_number',
                        type=int,
-                       help='The tracking number of package to be tracked')
+                       help='The tracking number of package to be tracked',
+                       required=False)
 parser.add_argument('service',
                         metavar='shipping_service',
                         type=str,
-                        help='The service shipping the package (USPS, UPS, FedEx)')
+                        help='The service shipping the package (usps, ups, fedex)',
+                        required=False)
 
 # Execute the parse_args() method
 args = parser.parse_args()
 
 # Execute correct function based on input command
 func = FUNCTION_MAP[args.command]
-func()
+if(func == add_package):
+    func(args.tracking_number, args.shipping_service)
+elif(func == del_package):
+    func(args.tracking_number)
+elif(func == track_all):
+    func()
+elif(func == track_one):
+    func(args.tracking_number, args.shipping_service)
 
 # Send request to API
 
