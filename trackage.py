@@ -11,7 +11,8 @@ FUNCTION_MAP = {'add_package' : add_package,
                 'track_one' : track_one}
 
 # Add the arguments
-parser.add_argument('command', choices=FUNCTION_MAP.keys())
+parser.add_argument('command', choices=FUNCTION_MAP.keys(), 
+                        help='Enter one of the following commands: /nadd_package (arguments: tracking_number, shipping_service) /ndelete_package (arguments: tracking_number)/ntrack_all (arguments: none)/ntrack_one (arguments: tracking_number shipping_service')
 # optional arguments depending on command
 parser.add_argument('tracking_number',
                        metavar='tracking_number',
@@ -37,9 +38,6 @@ elif(func == track_all):
     func()
 elif(func == track_one):
     func(args.tracking_number, args.shipping_service)
-
-# Send request to API
-
 
 # For testing
 input = args.tracking_number

@@ -7,11 +7,11 @@ def usps(tracking_num):
     requestXML = """
     <?xml verstion"1.0"?>
     <TrackRequest USERID="091NORTH7901">
-        <TrackID ID="123456789012"></TrackID>
+        <TrackID ID="""+"\""+tracking_num+"\""+"""></TrackID>
     </TrackRequest>
     """
     docString = requestXML
-    docString = docString.replace('\n', '').replace('\t','')
+    docString = docString.replace('\n', '').replace('\t','').replace('    ','')
     docString = urllib.parse.quote_plus(docString)
 
     url = "https://secure.shippingapis.com/ShippingAPI.dll?API=TrackV2&XML=" + docString
@@ -24,14 +24,13 @@ def usps(tracking_num):
         exit()
 
     contents = response.read()
-    print(contents) # error is here
+    print(contents) 
 
-    root = ET.fromstring(contents)
+    root = ET.fromstring(contents) # look into this
     for trackid in root.findall("TrackID"):
         print()
         print("" + trackid.find("TrackSummary").text)
 
-    return 0
 
 # args: tracking_num
 def ups(tracking_num):
