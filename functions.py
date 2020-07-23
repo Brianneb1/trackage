@@ -1,10 +1,36 @@
+import urllib.request
+import xml.etree.ElementTree as ET
+
 # args: tracking_num
 def usps(tracking_num):
     # verify with api
+    requestXML = """
+    <?xml verstion"1.0"?>
+    <TrackRequest USERID="091NORTH7901">
+        <TrackID ID="123456789012"></TrackID>
+    </TrackRequest>
+    """
+    docString = requestXML
+    docString = docString.replace('\n', '').replace('\t','')
+    docString = urllib.parse.quote_plus(docString)
 
-    # request status
+    url = "https://secure.shippingapis.com/ShippingAPI.dll?API=TrackV2&XML=" + docString
+    print(url + "\n\n")
 
-    # print status
+    response = urllib.request.urlopen(url)
+    if response.getcode() != 200:
+        print("Error making HTTP call:")
+        print(response.info())
+        exit()
+
+    contents = response.read()
+    print(contents) # error is here
+
+    root = ET.fromstring(contents)
+    for trackid in root.findall("TrackID"):
+        print()
+        print("" + trackid.find("TrackSummary").text)
+
     return 0
 
 # args: tracking_num
