@@ -17,13 +17,11 @@ parser.add_argument('command', choices=FUNCTION_MAP.keys(),
 parser.add_argument('tracking_number',
                        metavar='tracking_number',
                        type=int,
-                       help='The tracking number of package to be tracked',
-                       required=False)
+                       help='The tracking number of package to be tracked')
 parser.add_argument('service',
                         metavar='shipping_service',
                         type=str,
-                        help='The service shipping the package (usps, ups, fedex)',
-                        required=False)
+                        help='The service shipping the package (usps, ups, fedex)')
 
 # Execute the parse_args() method
 args = parser.parse_args()
@@ -37,8 +35,5 @@ elif(func == del_package):
 elif(func == track_all):
     func()
 elif(func == track_one):
-    func(args.tracking_number, args.shipping_service)
+    func(args.tracking_number, args.service)
 
-# For testing
-input = args.tracking_number
-print(input)

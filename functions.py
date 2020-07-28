@@ -4,10 +4,11 @@ import xml.etree.ElementTree as ET
 # args: tracking_num
 def usps(tracking_num):
     # verify with api
+    strnum = str(tracking_num)
     requestXML = """
     <?xml verstion"1.0"?>
     <TrackRequest USERID="091NORTH7901">
-        <TrackID ID="""+"\""+tracking_num+"\""+"""></TrackID>
+        <TrackID ID="""+"\""+strnum+"\""+"""></TrackID>
     </TrackRequest>
     """
     docString = requestXML
@@ -15,7 +16,7 @@ def usps(tracking_num):
     docString = urllib.parse.quote_plus(docString)
 
     url = "https://secure.shippingapis.com/ShippingAPI.dll?API=TrackV2&XML=" + docString
-    print(url + "\n\n")
+    # print(url + "\n\n")
 
     response = urllib.request.urlopen(url)
     if response.getcode() != 200:
@@ -24,10 +25,10 @@ def usps(tracking_num):
         exit()
 
     contents = response.read()
-    print(contents) 
+    # print(contents) 
 
     root = ET.fromstring(contents) # look into this
-    for trackid in root.findall("TrackID"):
+    for trackid in root:
         print()
         print("" + trackid.find("TrackSummary").text)
 
@@ -52,6 +53,7 @@ def fedex(tracking_num):
 
 # args: tracking_num, service
 def add_package(tracking_num, service):
+    print("Adding a package. . .")
     # open .txt file
 
     # write tracking_num and service
@@ -61,6 +63,7 @@ def add_package(tracking_num, service):
 
 # args: tracking_num
 def del_package(tracking_num):
+    print("Deleting a package. . .")
     # open .txt file
 
     # find package
@@ -72,6 +75,7 @@ def del_package(tracking_num):
 
 # args: none
 def track_all():
+    print("Tracking all packages. . .")
     # open .txt file
 
     # read .txt file
@@ -92,6 +96,7 @@ def track_all():
 
 # args: tracking_num, service
 def track_one(tracking_num, service):
+    print("Tracking package. . .")
     # call api for package and print status
     if(service == "usps"):
         usps(tracking_num)
