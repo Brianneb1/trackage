@@ -76,22 +76,30 @@ def del_package(tracking_num):
 # args: none
 def track_all():
     print("Tracking all packages. . .")
-    # open .txt file
 
-    # read .txt file
+    # open .txt file
+    plist = open("tracking.txt", "r")
+    pdict = {}
+
+    # read .txt file and create dict of packages {tn: service}
+    for x in plist:
+        tn = x[:x.find(",")]
+        service = x[x.find(",")+1:].strip()
+        pdict[tn] = service
 
     # call apis for each package and print status
-    # for x in file:
-    #     if(service == "usps"):
-    #         usps(tracking_num)
-    #     elif(service == "ups"):
-    #         ups(tracking_num)
-    #     elif(service == "fedex"):
-    #         fedex(tracking_num)
-    #     else:
-    #         print("Error: Service not supported.")
+    for tn, service in pdict.items():   
+        if(service == "usps"):
+            usps(tn)
+        elif(service == "ups"):
+            ups(tn)
+        elif(service == "fedex"):
+            fedex(tn)
+        else:
+            print("Error: Service not supported.")
 
     # close .txt file
+    plist.close()
     return 0
 
 # args: tracking_num, service
