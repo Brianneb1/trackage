@@ -66,16 +66,32 @@ def add_package(tracking_num, service, desc):
     plist.close()
     return 0
 
-# args: tracking_num
-def del_package(tracking_num):
+# args: description
+def del_package(description):
     print("Deleting a package. . .")
+
     # open .txt file
+    plist = open("tracking.txt", "r")
 
     # find package
+    read_plist = []
+    for x in plist:
+        split_line = x.split(",")
+        tn = split_line[0]
+        service = split_line[1]
+        desc = split_line[2].strip()
+        read_plist.append([tn,service,desc])
+    plist.close()
 
     # delete package
+    new_plist = open("tracking.txt", "w")
+    for item in read_plist:
+        if item[2] != description:
+            line = item[0]+","+item[1]+","+item[2]+"\n"
+            new_plist.write(line)
 
     # close .txt file
+    new_plist.close()
     return 0
 
 # args: none

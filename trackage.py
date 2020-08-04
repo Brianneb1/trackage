@@ -35,7 +35,7 @@ func = FUNCTION_MAP[args.command]
 if(func == add_package):
     func(args.tn, args.s, args.d)
 elif(func == del_package):
-    func(args.tn)
+    func(args.d)
 elif(func == track_all):
     func()
 elif(func == track_one):

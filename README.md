@@ -10,8 +10,8 @@ You will need Python installed to run this application.
 There are 4 available functions in this application:  
 1. add - requires tracking number, shipping service, and description  
 ex: python trackage.py add -tn 12312312312312312312 -s usps -d socks  
-2. delete - requires tracking number  
-ex: python trackage.py delete -tn 12312312312312312312
+2. delete - requires description of package to delete  
+ex: python trackage.py delete -d socks  
 3. track_all - no arguments  
 ex: python trackage.py track_all  
 4. track_one - requires tracking number and shipping service  
