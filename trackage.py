@@ -33,11 +33,24 @@ args = parser.parse_args()
 # Execute correct function based on input command
 func = FUNCTION_MAP[args.command]
 if(func == add_package):
-    func(args.tn, args.s, args.d)
+    if args.tn == None:
+        print("Please include -tn tracking_number")
+    if args.s == None:
+        print("Please include -s shipping_service")
+    if args.d == None:
+        print("Please include -d description")
+    if args.tn != None and args.s != None and args.d != None: 
+        func(args.tn, args.s, args.d)
 elif(func == del_package):
-    func(args.d)
+    if args.d == None:
+        print("Please include -d description")
+    else:
+        func(args.d)
 elif(func == track_all):
     func()
 elif(func == track_one):
-    func(args.tn, args.s)
+    if args.s == None:
+        print("Please include -s shipping_service")
+    else: 
+        func(args.tn, args.s)
 

@@ -64,6 +64,7 @@ def add_package(tracking_num, service, desc):
 
     # save and close .txt file
     plist.close()
+    print("Package added.")
     return 0
 
 # args: description
@@ -92,6 +93,7 @@ def del_package(description):
 
     # close .txt file
     new_plist.close()
+    print("Package deleted.")
     return 0
 
 # args: none
