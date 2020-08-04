@@ -35,6 +35,7 @@ def usps(tracking_num):
 
 # args: tracking_num
 def ups(tracking_num):
+    print("UPS not yet supported")
     # verify with api
 
     # request status
@@ -44,6 +45,7 @@ def ups(tracking_num):
 
 # args: tracking_num
 def fedex(tracking_num):
+    print("Fedex not yet supported")
     # verify with api
 
     # request status
