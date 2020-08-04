@@ -29,8 +29,8 @@ def usps(tracking_num):
 
     root = ET.fromstring(contents) # look into this
     for trackid in root:
+        print("Status: " + trackid.find("TrackSummary").text)
         print()
-        print("" + trackid.find("TrackSummary").text)
 
 
 # args: tracking_num
@@ -52,13 +52,18 @@ def fedex(tracking_num):
     return 0
 
 # args: tracking_num, service
-def add_package(tracking_num, service):
+def add_package(tracking_num, service, desc):
     print("Adding a package. . .")
-    # open .txt file
 
-    # write tracking_num and service
+    # open .txt file
+    plist = open("tracking.txt", "a")
+
+    # append tracking_num, service, and description
+    line = str(tracking_num)+","+service+","+desc+"\n"
+    plist.write(line)
 
     # save and close .txt file
+    plist.close()
     return 0
 
 # args: tracking_num
@@ -76,6 +81,7 @@ def del_package(tracking_num):
 # args: none
 def track_all():
     print("Tracking all packages. . .")
+    print()
 
     # open .txt file
     plist = open("tracking.txt", "r")
@@ -83,17 +89,20 @@ def track_all():
 
     # read .txt file and create dict of packages {tn: service}
     for x in plist:
-        tn = x[:x.find(",")]
-        service = x[x.find(",")+1:].strip()
-        pdict[tn] = service
+        split_line = x.split(",")
+        tn = split_line[0]
+        service = split_line[1]
+        desc = split_line[2].strip()
+        pdict[tn] = (service, desc)
 
     # call apis for each package and print status
-    for tn, service in pdict.items():   
-        if(service == "usps"):
+    for tn, info in pdict.items():  
+        print("Description:", info[1]) 
+        if(info[0] == "usps"):
             usps(tn)
-        elif(service == "ups"):
+        elif(info[0] == "ups"):
             ups(tn)
-        elif(service == "fedex"):
+        elif(info[0] == "fedex"):
             fedex(tn)
         else:
             print("Error: Service not supported.")

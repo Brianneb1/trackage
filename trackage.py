@@ -22,6 +22,10 @@ parser.add_argument('-s',
                         metavar='shipping_service',
                         type=str,
                         help='The service shipping the package (usps, ups, fedex)')
+parser.add_argument('-d',
+                        metavar='description',
+                        type=str,
+                        help='A description of the package')
 
 # Execute the parse_args() method
 args = parser.parse_args()
@@ -29,7 +33,7 @@ args = parser.parse_args()
 # Execute correct function based on input command
 func = FUNCTION_MAP[args.command]
 if(func == add_package):
-    func(args.tn, args.s)
+    func(args.tn, args.s, args.d)
 elif(func == del_package):
     func(args.tn)
 elif(func == track_all):
